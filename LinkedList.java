@@ -2,34 +2,35 @@
  * 
  * @author Benjamin Thomas
  * @version 1.0
+ * @param <T>
  * 
  * This class implements a linked list in Easy test
  */
 
-public class LinkedList {
+public class LinkedList<T> {
 
     /**
      * 
-     * @param <T> allows for any type of data
+     * @param <V> allows for any type of data
      * 
      * this class is an inner class for nodes
      */
-    public class ListNode<T> {
+    public class ListNode<V> {
 
         // next pointer
-        private ListNode<T> next;
+        private ListNode<V> next;
 
         // previous pointer
-        private ListNode<T> previous;
+        private ListNode<V> previous;
 
         // data variable
-        private T data;
+        private V data;
     
         /**
          * Constructor with data initialization.
          * @param data the passed data
          */
-        public ListNode(T data) {
+        public ListNode(V data) {
             this.data = data;
             this.next = null;
             this.previous = null;
@@ -48,7 +49,7 @@ public class LinkedList {
          * Returns the data stored in this node.
          * @return the data of this node.
          */
-        public T getData() {
+        public V getData() {
             return data;
         }
     
@@ -56,7 +57,7 @@ public class LinkedList {
          * Sets the data for this node.
          * @param data the data to set
          */
-        public void setData(T data) {
+        public void setData(V data) {
             this.data = data;
         }
     
@@ -64,7 +65,7 @@ public class LinkedList {
          * Returns the next node.
          * @return the next node.
          */
-        public ListNode<T> getNext() {
+        public ListNode<V> getNext() {
             return next;
         }
     
@@ -72,7 +73,7 @@ public class LinkedList {
          * Sets the next node of this node.
          * @param next the node to set as next
          */
-        public void setNext(ListNode<T> next) {
+        public void setNext(ListNode<V> next) {
             this.next = next;
         }
     
@@ -80,7 +81,7 @@ public class LinkedList {
          * Returns the previous node.
          * @return the previous node.
          */
-        public ListNode<T> getPrevious() {
+        public ListNode<V> getPrevious() {
             return previous;
         }
     
@@ -88,8 +89,11 @@ public class LinkedList {
          * Sets the previous node of this node.
          * @param previous the node to set as previous
          */
-        public void setPrevious(ListNode<T> previous) {
+        public void setPrevious(ListNode<V> previous) {
             this.previous = previous;
         }
     }
+
+    ListNode<T> headNode;
+    ListNode<T> tailNode;
 }

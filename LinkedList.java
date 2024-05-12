@@ -7,4 +7,14 @@
  */
 
 public class LinkedList {
+
+    /**
+     * 
+     * @param <T> the generic that holds the data
+     */
+    public class Node<T> {
+        public Node<T> next;
+        public Node<T> previous;
+        public T data;
+    }
 }

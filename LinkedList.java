@@ -97,6 +97,11 @@ public class LinkedList<T> {
         this.tailNode = null;
     }
 
+    /**
+     * 
+     * @param node the node passed
+     * the constructor for just one node
+     */
     public LinkedList(ListNode<T> node) {
         size = 1;
         this.headNode = node;

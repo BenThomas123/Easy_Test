@@ -175,6 +175,14 @@ public class LinkedList<T> {
 
     /**
      * 
+     * @return if the list is empty
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
+     * 
      * @param data the data of the new head
      * method adds a head to the node by value
      */

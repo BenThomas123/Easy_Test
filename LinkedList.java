@@ -97,6 +97,12 @@ public class LinkedList<T> {
         this.tailNode = null;
     }
 
+    public LinkedList(ListNode<T> node) {
+        size = 1;
+        this.headNode = node;
+        this.tailNode = headNode;
+    }
+
     /**
      * Returns the index of the specified node within the linked list.
      *
@@ -140,6 +146,27 @@ public class LinkedList<T> {
         return null; // Return null if the index is out of bounds (no node found at the specified index).
     }
 
+    /**
+     * 
+     * @param node the node to search for
+     * @return if the node was found
+     * 
+     * searches for the node
+     */
+    public boolean contains(ListNode<T> node) {
+        return indexOf(node) != -1;
+    }
+
+    /**
+     * 
+     * @param data the data you to search for
+     * @return if the data was found
+     * 
+     * searches for the data
+     */
+    public boolean contains(T data) {
+        return indexOf(new ListNode<T>(data)) != -1;
+    }
 
     /**
      * 

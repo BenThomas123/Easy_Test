@@ -98,25 +98,48 @@ public class LinkedList<T> {
     }
 
     /**
-     * 
+     * Returns the index of the specified node within the linked list.
+     *
      * @param n the node to look for
-     * @return the index of the node
+     * @return the index of the node if it exists in the list, or -1 if the node is not found.
      */
-    public int index(ListNode<T> n) {
-        int index = 0;
+    public int indexOf(ListNode<T> n) {
+        int index = 0; // Initialize an index counter to 0.
 
-        ListNode<T> current = headNode;
+        ListNode<T> current = headNode; // Start from the head of the list.
 
         do {
+            // Check if the data of the current node matches the data of the node n.
             if (n.getData().equals(current.getData())) {
-                return index;
+                return index; // Return the current index if a match is found.
             }
-            index += 1;
-            current = current.next;
-        } while (current != null);
+            index += 1; // Increment the index counter.
+            current = current.next; // Move to the next node in the list.
+        } while (current != null); // Continue until the end of the list is reached.
 
-        return index;
+        return -1; // Return -1 if no match was found (the node n is not in the list).
     }
+
+    /**
+     * Retrieves the node at a specified index in the linked list.
+     *
+     * @param index the index of the node to retrieve
+     * @return the node at the specified index or null if the index is out of bounds.
+     */
+    public ListNode<T> get(int index) {
+        ListNode<T> current = headNode; // Start from the head of the list.
+
+        do {
+            // Check if the current node is at the desired index.
+            if (indexOf(current) == index) {
+                return current; // Return the current node if it is at the specified index.
+            }
+            current = current.next; // Move to the next node.
+        } while (current != null); // Continue until the end of the list is reached.
+
+        return null; // Return null if the index is out of bounds (no node found at the specified index).
+    }
+
 
     /**
      * 

@@ -507,4 +507,23 @@ public class LinkedList<T> {
         // After the loop, previous will be pointing to the new head of the reversed list
         headNode = previous;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        ListNode<T> current = headNode;
+        while (current != null) {
+            sb.append(current.getData());
+            if (current.getNext() != null) {
+                sb.append(", ");
+            }
+            current = current.getNext();
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
+
 }

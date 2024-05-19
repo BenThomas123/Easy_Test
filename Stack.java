@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 public class Stack<T> implements Iterable<T>{
     
     public class StackNode<V> {
+        
         // next pointer
         private StackNode<V> next;
 
@@ -111,6 +112,7 @@ public class Stack<T> implements Iterable<T>{
     public void clear() {
         if (top != null) {
             top = null;
+            size = 0;
         }
     }
 

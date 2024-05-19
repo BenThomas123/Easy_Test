@@ -183,6 +183,15 @@ public class LinkedList<T> {
 
     /**
      * 
+     * clears the linked lis
+     */
+    public void clear() {
+        headNode = null;
+        tailNode = null;
+    }
+
+    /**
+     * 
      * @param data the data of the new head
      * method adds a head to the node by value
      */
@@ -383,5 +392,119 @@ public class LinkedList<T> {
 
         // increment the size
         size += 1;
+    }
+
+    public boolean remove(ListNode<T> nodeToRemove) {
+        if (headNode == null) { // If the list is empty
+            return false;
+        }
+        if (nodeToRemove.equals(headNode)) { // If the node to remove is the head
+            headNode = headNode.getNext(); // Move head to the next node
+            if (headNode == null) { // If the list becomes empty
+                tailNode = null;
+            }
+            size--; // Decrement size
+            return true;
+        }
+    
+        ListNode<T> current = headNode;
+        while (current.getNext() != null) { // Traverse the list to find the node
+            if (current.getNext().equals(nodeToRemove)) {
+                if (nodeToRemove.equals(tailNode)) { // If the node to remove is the tail
+                    tailNode = current; // Update tail
+                }
+                current.setNext(current.getNext().getNext()); // Bypass the node to remove
+                size--; // Decrement size
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false; // Return false if the node was not found
+    }
+
+    public boolean remove(T data) {
+        ListNode<T> nodeToRemove = new ListNode<T>(data);
+        if (headNode == null) { // If the list is empty
+            return false;
+        }
+        if (nodeToRemove.equals(headNode)) { // If the node to remove is the head
+            headNode = headNode.getNext(); // Move head to the next node
+            if (headNode == null) { // If the list becomes empty
+                tailNode = null;
+            }
+            size--; // Decrement size
+            return true;
+        }
+    
+        ListNode<T> current = headNode;
+        while (current.getNext() != null) { // Traverse the list to find the node
+            if (current.getNext().equals(nodeToRemove)) {
+                if (nodeToRemove.equals(tailNode)) { // If the node to remove is the tail
+                    tailNode = current; // Update tail
+                }
+                current.setNext(current.getNext().getNext()); // Bypass the node to remove
+                size--; // Decrement size
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false; // Return false if the node was not found
+    }
+
+    public T remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        ListNode<T> removedNode = null;
+        if (index == 0) {
+            removedNode = headNode;
+            headNode = headNode.getNext();
+            if (size == 1) {
+                tailNode = null;
+            }
+        } else {
+            ListNode<T> current = headNode;
+            for (int i = 0; i < index - 1; i++) {
+                current = current.getNext();
+            }
+            removedNode = current.getNext();
+            current.setNext(removedNode.getNext());
+            if (removedNode.getNext() == null) {
+                tailNode = current;
+            }
+        }
+        size--;
+        return removedNode.getData();
+    }
+    
+    /**
+     * 
+     * this reverses the linked list
+     */
+    public void reverse() {
+
+        // If the list is empty or has only one node, no need to reverse
+        if (headNode == null || headNode.getNext() == null) {
+            return;
+        }
+    
+        // Initialize three pointers for the reversal process
+        ListNode<T> previous = null;
+        ListNode<T> current = headNode;
+        ListNode<T> next = null;
+    
+        // Update the tail node to be the current head before the reversal
+        tailNode = headNode;
+    
+        // Traverse through the list and reverse the links
+        while (current != null) {
+            next = current.getNext(); // Temporarily store the next node
+            current.setNext(previous); // Reverse the current node's pointer
+            previous = current; // Move the previous pointer one step forward
+            current = next; // Move to the next node in the original list
+        }
+    
+        // After the loop, previous will be pointing to the new head of the reversed list
+        headNode = previous;
     }
 }

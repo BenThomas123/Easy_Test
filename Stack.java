@@ -122,6 +122,10 @@ public class Stack<T> implements Iterable<T>{
         return top.getData();
     }
 
+    public int size(){
+        return this.size;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

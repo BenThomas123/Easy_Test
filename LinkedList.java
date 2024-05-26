@@ -1,3 +1,5 @@
+import javax.print.attribute.standard.RequestingUserName;
+
 /**
  * 
  * @author Benjamin Thomas
@@ -524,6 +526,10 @@ public class LinkedList<T> {
 
         sb.append("]");
         return sb.toString();
+    }
+
+    public int getSize() {
+        return size;
     }
 
 }

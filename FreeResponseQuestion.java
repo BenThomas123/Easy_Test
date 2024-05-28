@@ -22,4 +22,20 @@ public class FreeResponseQuestion extends Question {
         parts.remove(part);
     }
 
+    public String toString() {
+        String str = "";
+        str += super.getPrompt() + "\n\n";
+        for (int i = 0; i < parts.getSize(); i++){
+            str += (parts.get(i).getData().getPart() + ". " + parts.get(i).getData().getPrompt());
+            for (int j = 0; j < parts.get(i).getData().getSpace(); j++) {
+                str += "\n";
+            }
+        }
+        return str;
+    }
+
+    public void printOut(){
+        //todo
+    }
+
 }

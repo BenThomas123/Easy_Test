@@ -139,13 +139,13 @@ public class LinkedList<T> {
      * @param index the index of the node to retrieve
      * @return the node at the specified index or null if the index is out of bounds.
      */
-    public ListNode<T> get(int index) {
+    public T get(int index) {
         ListNode<T> current = headNode; // Start from the head of the list.
 
         do {
             // Check if the current node is at the desired index.
             if (indexOf(current) == index) {
-                return current; // Return the current node if it is at the specified index.
+                return current.getData(); // Return the current node if it is at the specified index.
             }
             current = current.next; // Move to the next node.
         } while (current != null); // Continue until the end of the list is reached.

@@ -1,21 +1,55 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinarySearchTree<T extends Comparable<T>> {
+public class BinarySearchTree<K extends Comparable<K>, V> {
 
-    private class Node<T> {
-        private T data;
-        private Node<T> left;
-        private Node<T> right;
+    private class TreeNode<K, V> {
+        private K key;
+        private V value;
+        private TreeNode<K, V> left;
+        private TreeNode<K, V> right;
 
-        public Node(T data) {
-            this.data = data;
+        public TreeNode(K key, V value) {
+            this.key = key;
+            this.value = value;
             this.left = null;
             this.right = null;
         }
+        
+        public K getKey() {
+            return this.key;
+        }
+
+        public void setKey (K key) {
+            this.key = key;
+        }
+
+        public V getValue () {
+            return this.value;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
+        }
+
+        public TreeNode<K, V> getLeftNode () {
+            return this.left;
+        }
+
+        public void getLeftNode (TreeNode<K, V> leftNode) {
+           this.left = leftNode;
+        }
+
+        public TreeNode<K, V> getRightNode () {
+            return this.right;
+        }
+
+        public void getRightNode (TreeNode<K, V> rightNode) {
+           this.right = rightNode;
+        }
     }
 
-    private Node<T> root;
+    private TreeNode<K, V> root;
     private int size;
 
     public BinarySearchTree() {
@@ -23,113 +57,64 @@ public class BinarySearchTree<T extends Comparable<T>> {
         this.size = 0;
     }
 
-    // Insert a node into the BST
-    public void insert(T data) {
-        root = insertRec(root, data);
+    // Insert a key-value pair into the BST
+    public void put(K key, V value) {
+        root = insertRec(root, key, value);
         size++;
     }
 
-    private Node<T> insertRec(Node<T> root, T data) {
+    private TreeNode<K, V> insertRec(TreeNode<K, V> root, K key, V value) {
         if (root == null) {
-            root = new Node<>(data);
+            root = new TreeNode<>(key, value);
             return root;
         }
 
-        if (data.compareTo(root.data) < 0) {
-            root.left = insertRec(root.left, data);
-        } else if (data.compareTo(root.data) > 0) {
-            root.right = insertRec(root.right, data);
+        if (key.compareTo(root.key) < 0) {
+            root.left = insertRec(root.left, key, value);
+        } else if (key.compareTo(root.key) > 0) {
+            root.right = insertRec(root.right, key, value);
+        } else {
+            root.value = value;
         }
 
         return root;
     }
 
-    // Search for a node in the BST
-    public boolean search(T data) {
-        return searchRec(root, data);
+    // Search for a value by key in the BST
+    public V get(K key) {
+        return searchRec(root, key);
     }
 
-    private boolean searchRec(Node<T> root, T data) {
-        if (root == null) {
-            return false;
-        }
-
-        if (data.compareTo(root.data) == 0) {
-            return true;
-        }
-
-        return data.compareTo(root.data) < 0
-                ? searchRec(root.left, data)
-                : searchRec(root.right, data);
-    }
-
-    // Delete a node from the BST
-    public void delete(T data) {
-        root = deleteRec(root, data);
-    }
-
-    private Node<T> deleteRec(Node<T> root, T data) {
+    private V searchRec(TreeNode<K, V> root, K key) {
         if (root == null) {
             return null;
         }
 
-        if (data.compareTo(root.data) < 0) {
-            root.left = deleteRec(root.left, data);
-        } else if (data.compareTo(root.data) > 0) {
-            root.right = deleteRec(root.right, data);
-        } else {
-            // Node to be deleted found
-
-            // Node with only one child or no child
-            if (root.left == null) {
-                size--;
-                return root.right;
-            } else if (root.right == null) {
-                size--;
-                return root.left;
-            }
-
-            // Node with two children: Get the inorder successor (smallest in the right subtree)
-            root.data = minValue(root.right);
-
-            // Delete the inorder successor
-            root.right = deleteRec(root.right, root.data);
+        if (key.compareTo(root.key) == 0) {
+            return root.value;
         }
 
-        return root;
-    }
-
-    private T minValue(Node<T> root) {
-        T minValue = root.data;
-        while (root.left != null) {
-            minValue = root.left.data;
-            root = root.left;
-        }
-        return minValue;
-    }
-
-    private T maxValue(Node<T> root) {
-        T maxValue = root.data;
-        while (root.right != null) {
-            maxValue = root.right.data;
-            root = root.right;
-        }
-        return maxValue;
+        return key.compareTo(root.key) < 0 ? searchRec(root.left, key) : searchRec(root.right, key);
     }
 
     // In-order traversal
-    public List<T> inOrderTraversal() {
-        List<T> result = new ArrayList<>();
+    public List<V> inOrderTraversal() {
+        List<V> result = new ArrayList<>();
         inOrderRec(root, result);
         return result;
     }
 
-    private void inOrderRec(Node<T> root, List<T> result) {
+    private void inOrderRec(TreeNode<K, V> root, List<V> result) {
         if (root != null) {
             inOrderRec(root.left, result);
-            result.add(root.data);
+            result.add(root.value);
             inOrderRec(root.right, result);
         }
+    }
+
+    // Get the size of the BST
+    public int size() {
+        return size;
     }
 
     // Clear the BST
@@ -138,8 +123,54 @@ public class BinarySearchTree<T extends Comparable<T>> {
         size = 0;
     }
 
-    // Get the size of the BST
-    public int size() {
-        return size;
+    // Delete a key-value pair from the BST
+    public void delete(K key) {
+        root = deleteRec(root, key);
+    }
+
+    private TreeNode<K, V> deleteRec(TreeNode<K, V> root, K key) {
+        if (root == null) {
+            return root;
+        }
+
+        if (key.compareTo(root.key) < 0) {
+            root.left = deleteRec(root.left, key);
+        } else if (key.compareTo(root.key) > 0) {
+            root.right = deleteRec(root.right, key);
+        } else {
+            // Node with only one child or no child
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+
+            // Node with two children: Get the inorder successor (smallest in the right subtree)
+            root.key = findMinKey(root.right);
+            root.value = findMinValue(root.right);
+
+            // Delete the inorder successor
+            root.right = deleteRec(root.right, root.key);
+        }
+
+        return root;
+    }
+
+    private K findMinKey(TreeNode<K, V> root) {
+        K minKey = root.key;
+        while (root.left != null) {
+            root = root.left;
+            minKey = root.key;
+        }
+        return minKey;
+    }
+
+    private V findMinValue(TreeNode<K, V> root) {
+        V minValue = root.value;
+        while (root.left != null) {
+            root = root.left;
+            minValue = root.value;
+        }
+        return minValue;
     }
 }
